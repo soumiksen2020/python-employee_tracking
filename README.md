@@ -82,4 +82,8 @@ Right-click the icon to see options for starting and stopping tracking, as well 
 ## Generate Report:
 When you stop the tracking, the application will automatically generate a Word report summarizing the application usage.
 
+## Screenshot:
+![image](https://github.com/user-attachments/assets/8e597aeb-6694-47f1-97ca-ed891a098731)
+
+
 
