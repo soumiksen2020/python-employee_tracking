@@ -75,11 +75,11 @@ CREATE TABLE work_logs (
 pyinstaller --onefile --windowed --hidden-import=pymysql --hidden-import=docx E:\app_monitor.py
 ( since my python file is in E: )
 
-##Using the System Tray Icon:
+## Using the System Tray Icon:
 Once the application is running, an icon will appear in your system tray.
 Right-click the icon to see options for starting and stopping tracking, as well as exiting the application.
-Generate Report:
 
-## When you stop the tracking, the application will automatically generate a Word report summarizing the application usage.
+## Generate Report:
+When you stop the tracking, the application will automatically generate a Word report summarizing the application usage.
 
 
