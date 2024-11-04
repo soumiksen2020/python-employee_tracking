@@ -52,59 +52,78 @@ def take_screenshot():
     print(f"Screenshot saved as: {screenshot_path}")
 
 # Step 3: Generate a Word report with a usage chart
+# Step 3: Generate a Word report with a usage chart, including login/logout times and active duration
+# Step 3: Generate a Word report with a usage chart, including login/logout times and active duration
 def generate_word_report(logs):
     if not logs:
         print("No logs found to generate the report.")
         return
 
-    try:
-        doc = Document()
-        doc.add_heading("Application Usage Report", 0)
+    # Initialize a new Word document
+    doc = Document()
+    doc.add_heading("Application Usage Report", 0)
 
-        # Add usage details table
-        doc.add_heading("Usage Details:", level=1)
-        table = doc.add_table(rows=1, cols=4)
-        hdr_cells = table.rows[0].cells
-        hdr_cells[0].text = 'App Name'
-        hdr_cells[1].text = 'Start Time'
-        hdr_cells[2].text = 'End Time'
-        hdr_cells[3].text = 'Duration (seconds)'
+    # Add a table for the application logs
+    doc.add_heading("Usage Details:", level=1)
+    table = doc.add_table(rows=1, cols=4)
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'App Name'
+    hdr_cells[1].text = 'Start Time'
+    hdr_cells[2].text = 'End Time'
+    hdr_cells[3].text = 'Duration (seconds)'
 
-        app_durations = {}
-        for log in logs:
-            row_cells = table.add_row().cells
-            row_cells[0].text = log[0]
-            row_cells[1].text = log[1].strftime("%Y-%m-%d %H:%M:%S")
-            row_cells[2].text = log[2].strftime("%Y-%m-%d %H:%M:%S")
-            row_cells[3].text = str(log[3])
+    # Populate the table with logs and accumulate durations for charting
+    app_durations = {}
+    for log in logs:
+        # Exclude applications with zero duration
+        if log[3] <= 0:
+            continue
 
-            if log[3] > 0:
-                app_durations[log[0]] = app_durations.get(log[0], 0) + log[3]
+        row_cells = table.add_row().cells
+        row_cells[0].text = log[0]
+        row_cells[1].text = log[1].strftime("%Y-%m-%d %H:%M:%S")
+        row_cells[2].text = log[2].strftime("%Y-%m-%d %H:%M:%S")
+        row_cells[3].text = str(log[3])
 
-        # Generate chart if there is data
-        if app_durations:
-            fig, ax = plt.subplots(figsize=(12, 10))
-            app_names = list(app_durations.keys())
-            durations = list(app_durations.values())
-            y_pos = np.arange(len(app_names))
-            ax.barh(y_pos, durations, color="skyblue")
-            ax.set_yticks(y_pos)
-            ax.set_yticklabels(app_names)
-            ax.set_xlabel("Duration (seconds)")
-            ax.set_title("Application Usage Time")
-            plt.tight_layout(pad=4.0)
+        # Accumulate duration for each application
+        app_durations[log[0]] = app_durations.get(log[0], 0) + log[3]
 
-            chart_path = "usage_chart.jpeg"
-            plt.savefig(chart_path, format="jpeg")
-            plt.close()
-            doc.add_picture(chart_path, width=Inches(6))
-            os.remove(chart_path)
+    # Step 4: Create a bar chart for application usage
+    doc.add_heading("Application Usage Chart:", level=1)
+    fig, ax = plt.subplots(figsize=(12, 10))  # Increased width and height for better visibility
+    app_names = list(app_durations.keys())
+    durations = list(app_durations.values())
 
-        doc.save("Application_Usage_Report.docx")
-        print("Report generated: Application_Usage_Report.docx")
+    # Set up the bar chart
+    y_pos = np.arange(len(app_names))
+    ax.barh(y_pos, durations, color="skyblue")
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(app_names)
+    ax.set_xlabel("Duration (seconds)")
+    ax.set_title("Application Usage Time")
 
-    except Exception as e:
-        print(f"Error generating report: {e}")
+    # Rotate the y-axis labels
+    plt.yticks(rotation=0)  # Keeping labels horizontal for better visibility
+
+    # Add more space at the bottom
+    plt.tight_layout(pad=4.0)
+
+    # Save the chart as an image
+    chart_path = "usage_chart.png"
+    plt.savefig(chart_path)
+    plt.close()
+
+    # Add the chart image to the Word document
+    doc.add_picture(chart_path, width=Inches(6))  # Adjust width if needed
+    os.remove(chart_path)  # Clean up the chart image file
+
+    # Save the Word document
+    report_path = "Application_Usage_Report.docx"
+    doc.save(report_path)
+    print(f"Report generated: {report_path}")
+
+
+
 
 # Step 4: Start and stop tracking functions
 def start_tracking(icon, item):
