@@ -52,9 +52,9 @@ venv\Scripts\activate
 
 pip install pymysql pyautogui pystray Pillow python-docx matplotlib numpy
 
-Set Up MySQL Database:
+## Set Up MySQL Database:
 
-## Install MySQL and set it up on your machine.
+Install MySQL and set it up on your machine.
 Create a database named usage_tracker.
 Create the necessary tables (applications and work_logs) in your database. You can use the following SQL commands:
 
