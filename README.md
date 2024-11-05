@@ -42,12 +42,6 @@ Before running this application, ensure you have the following installed on your
    git clone https://github.com/soumiksen2020/python-employee_tracking.git
    cd python-employee_tracking
 
-## Install Required Libraries: Create a virtual environment (optional but recommended) and activate it:
-
-On Windows:
-python -m venv venv
-venv\Scripts\activate
-
 ## install the required libraries with the following commands:
 
 pip install pymysql pyautogui pystray Pillow python-docx matplotlib numpy
