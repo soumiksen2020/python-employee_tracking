@@ -78,8 +78,6 @@ When you stop the tracking, the application will automatically generate a Word r
 The report will get generated in the 'dist' folder as can be seen in the below screnshot.
 
 ## Screenshot:
-![image](https://github.com/user-attachments/assets/8e597aeb-6694-47f1-97ca-ed891a098731)
-
 ![image](https://github.com/user-attachments/assets/b62251be-aa0b-42e1-91b6-2a3a24ce4dea)
 
 
