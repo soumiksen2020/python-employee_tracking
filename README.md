@@ -66,8 +66,9 @@ CREATE TABLE work_logs (
 );
 
 ## Run the Application
-pyinstaller --onefile --windowed --hidden-import=pymysql --hidden-import=docx E:\app_monitor.py
+1. pyinstaller --onefile --windowed --hidden-import=pymysql --hidden-import=docx E:\app_monitor.py
 ( since my python file is in E: )
+2. app_monitor.exe
 
 ## Using the System Tray Icon:
 Once the application is running, an icon will appear in your system tray.
