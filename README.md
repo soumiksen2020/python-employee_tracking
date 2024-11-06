@@ -7,7 +7,7 @@ This repository contains a Python application for tracking employee application 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
+- [Screenshot](#Screenshot)
 
 ## Prerequisites
 
